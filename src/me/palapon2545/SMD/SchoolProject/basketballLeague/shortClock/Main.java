@@ -30,6 +30,7 @@ import java.awt.SystemColor;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButtonMenuItem;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.ComponentOrientation;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -45,13 +46,13 @@ public class Main extends JFrame implements ActionListener {
 	public final String title = "me.palapon2545.SMD.SchoolProject.basketballLeague.shortClock.Main.java.setDisplayTitle('SATIT SHORTCLOCK by PALAPON2545')";
 
 	// Don't change this int zone
-	// ******************************\\
+	//==============================\\
 	public static int timeLeft = -1;
 	public static int timeStart = -1;
 	public static int timeAddon = -1;
 	public static int left = 0;
 	public static int right = 0;
-	// ******************************\\
+	//==============================\\
 
 	public static JProgressBar progressBar = new JProgressBar();
 
@@ -77,9 +78,11 @@ public class Main extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+					//Display user mac-address
 					MAC_ADDRESS.main();
 					
+					//License check by 'MAC-Address'
+					//=================================================================================\\
 					if (MAC_ADDRESS.mac_address_strict_mode == true) {
 						if (!MAC_ADDRESS.mac_address_list.contains(MAC_ADDRESS.mac_address_this_user)) {
 							LicensePopup popup = new LicensePopup();
@@ -93,6 +96,8 @@ public class Main extends JFrame implements ActionListener {
 						Main frame = new Main();
 						frame.setVisible(true);
 					}
+					//=================================================================================\\
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -107,11 +112,11 @@ public class Main extends JFrame implements ActionListener {
 
 	public Main() {
 
-		announce("----------------------------------------------------");
+		announce("====================================================");
 		announce("DEBUGGER");
 		MAC_ADDRESS.main();
 
-		announce("----------------------------------------------------");
+		announce("====================================================");
 		announce(" ");
 		announce(" WELCOME TO MY PROGRAM");
 		announce(" THANKS FOR USING IT!");
@@ -122,7 +127,7 @@ public class Main extends JFrame implements ActionListener {
 		announce(" ALSO MY FACEBOOK");
 		announce("   \"https://fb.me/p0ndja\"");
 		announce(" ");
-		announce("----------------------------------------------------");
+		announce("====================================================");
 
 		announce("running program . . .");
 
@@ -136,6 +141,12 @@ public class Main extends JFrame implements ActionListener {
 		announce("set gui border");
 		announce(" * width = " + width);
 		announce(" * height = " + height);
+		
+		//This code below block user to resize windows
+		//===========================================\\
+		setPreferredSize(new Dimension(width, height));
+		setResizable(false);
+		//===========================================\\
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

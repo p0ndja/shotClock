@@ -58,6 +58,9 @@ public class Main extends JFrame implements ActionListener {
 
 	public static Clock Clock = null;
 	public static Thread Clock_Thread = null;
+	
+	public static Clock2 Clock2 = null;
+	public static Thread Clock2_Thread = null;
 
 	private final JButton btnMinute_1 = new JButton("12 MINUTE");
 	private final JButton btnMinute_2 = new JButton("5 MINUTE");
@@ -73,17 +76,16 @@ public class Main extends JFrame implements ActionListener {
 	private final JButton button_1 = new JButton("-");
 	private final JButton button_2 = new JButton("+");
 	private final JButton button_3 = new JButton("-");
+	public static JLabel label_milli = new JLabel(" ");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//Display user mac-address
-					MAC_ADDRESS.main();
-					
 					//License check by 'MAC-Address'
 					//=================================================================================\\
 					if (MAC_ADDRESS.mac_address_strict_mode == true) {
+						MAC_ADDRESS.main();
 						if (!MAC_ADDRESS.mac_address_list.contains(MAC_ADDRESS.mac_address_this_user)) {
 							LicensePopup popup = new LicensePopup();
 							popup.setVisible(true);
@@ -111,10 +113,6 @@ public class Main extends JFrame implements ActionListener {
 	}
 
 	public Main() {
-
-		announce("====================================================");
-		announce("DEBUGGER");
-		MAC_ADDRESS.main();
 
 		announce("====================================================");
 		announce(" ");
@@ -162,6 +160,7 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				timeLeft = 480;
 				timeStart = timeLeft;
+				runClock();
 			}
 		});
 		btnMinute.setBounds(184, 11, 131, 20);
@@ -174,6 +173,7 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				timeLeft = 720;
 				timeStart = timeLeft;
+				runClock();
 			}
 		});
 		btnMinute_1.setBounds(43, 11, 131, 20);
@@ -184,6 +184,7 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				timeLeft = 300;
 				timeStart = timeLeft;
+				runClock();
 			}
 		});
 		btnMinute_2.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -196,6 +197,7 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				timeLeft = 180;
 				timeStart = timeLeft;
+				runClock();
 			}
 		});
 		btnMinute_3.setBackground(Color.WHITE);
@@ -209,6 +211,7 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				timeLeft = 60;
 				timeStart = timeLeft;
+				runClock();
 			}
 		});
 		btnMinute_4.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -220,6 +223,7 @@ public class Main extends JFrame implements ActionListener {
 		btnSecond.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				timeAddon = 24;
+				runClockForAddon();
 			}
 		});
 		btnSecond.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -231,6 +235,7 @@ public class Main extends JFrame implements ActionListener {
 		btnSecond_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				timeAddon = 14;
+				runClockForAddon();
 			}
 		});
 		btnSecond_1.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -264,7 +269,7 @@ public class Main extends JFrame implements ActionListener {
 		label_left.setFont(new Font("Angsana New", Font.BOLD, 250));
 		label_left.setBackground(Color.WHITE);
 		label_left.setHorizontalAlignment(SwingConstants.CENTER);
-		label_left.setBounds(0, 250, 277, 241);
+		label_left.setBounds(0, 315, 277, 176);
 		contentPane.add(label_left);
 		announce("add label_left");
 
@@ -272,7 +277,7 @@ public class Main extends JFrame implements ActionListener {
 		label_right.setForeground(Color.BLUE);
 		label_right.setFont(new Font("Angsana New", Font.BOLD, 250));
 		label_right.setBackground(Color.WHITE);
-		label_right.setBounds(507, 250, 277, 241);
+		label_right.setBounds(507, 321, 277, 170);
 		contentPane.add(label_right);
 		announce("add label_right");
 
@@ -284,7 +289,7 @@ public class Main extends JFrame implements ActionListener {
 				left = left + 1;
 			}
 		});
-		button.setBounds(85, 491, 47, 42);
+		button.setBounds(85, 508, 47, 42);
 		announce("add left-side '+' button");
 
 		contentPane.add(button);
@@ -298,7 +303,7 @@ public class Main extends JFrame implements ActionListener {
 				}
 			}
 		});
-		button_1.setBounds(143, 491, 47, 42);
+		button_1.setBounds(143, 508, 47, 42);
 		contentPane.add(button_1);
 		announce("add left-side '-' button");
 
@@ -310,7 +315,7 @@ public class Main extends JFrame implements ActionListener {
 		});
 		button_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		button_2.setBackground(Color.WHITE);
-		button_2.setBounds(593, 491, 47, 42);
+		button_2.setBounds(593, 508, 47, 42);
 		contentPane.add(button_2);
 		announce("add right-side '+' button");
 
@@ -324,7 +329,7 @@ public class Main extends JFrame implements ActionListener {
 		});
 		button_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		button_3.setBackground(Color.WHITE);
-		button_3.setBounds(651, 491, 47, 42);
+		button_3.setBounds(651, 508, 47, 42);
 		contentPane.add(button_3);
 		announce("add right-side '-' button");
 
@@ -347,7 +352,45 @@ public class Main extends JFrame implements ActionListener {
 		Clock = new Clock();
 		Clock_Thread = new Thread(Clock);
 		Clock_Thread.start();
-		announce("START delayLoadConfig_Thread");
+		announce("START Main clock timer");
+		
+		Clock2 = new Clock2();
+		Clock2_Thread = new Thread(Clock2);
+		Clock2_Thread.start();
+		announce("START Addon-clock timer");
+		
+		JButton button_4 = new JButton("||");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean o = true;
+				if (Clock.isClockPause == false) {
+					o = true;
+				} else if (Clock.isClockPause == true) {
+					o = false;
+				}
+				Clock.isClockPause = o;
+				
+			}
+		});
+		button_4.setBackground(Color.PINK);
+		button_4.setBounds(737, 276, 47, 42);
+		contentPane.add(button_4);
+		
+		label_milli.setVisible(false);
+		label_milli.setHorizontalAlignment(SwingConstants.CENTER);
+		label_milli.setForeground(Color.WHITE);
+		label_milli.setFont(new Font("Cordia New", Font.BOLD, 300));
+		label_milli.setBounds(439, 42, 256, 237);
+		contentPane.add(label_milli);
+	}
+	
+	public void runClockForAddon() {
+		Clock.isClockPause = false;
+	}
+	
+	public void runClock() { 
+		Clock.i = 59;
+		Clock.isClockPause = false;
 	}
 
 	@Override

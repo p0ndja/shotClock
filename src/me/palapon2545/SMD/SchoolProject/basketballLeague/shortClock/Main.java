@@ -382,6 +382,17 @@ public class Main extends JFrame implements ActionListener {
 		label_milli.setFont(new Font("Cordia New", Font.BOLD, 300));
 		label_milli.setBounds(439, 42, 256, 237);
 		contentPane.add(label_milli);
+		
+		JButton button_5 = new JButton("S");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Clock.isClockPause = true;
+				playSound("timeOut.wav");
+			}
+		});
+		button_5.setBackground(Color.PINK);
+		button_5.setBounds(10, 276, 47, 42);
+		contentPane.add(button_5);
 	}
 	
 	public void runClockForAddon() {

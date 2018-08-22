@@ -5,14 +5,11 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import sun.audio.*;
-import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimerTask;
 
-import javax.management.timer.Timer;
+import java.util.Timer;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -22,19 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Frame;
-
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import java.awt.SystemColor;
 import javax.swing.JProgressBar;
-import javax.swing.JRadioButtonMenuItem;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.ComponentOrientation;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
 
 public class Main extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 561811103320831759L;
@@ -55,12 +44,6 @@ public class Main extends JFrame implements ActionListener {
 	//==============================\\
 
 	public static JProgressBar progressBar = new JProgressBar();
-
-	public static Clock Clock = null;
-	public static Thread Clock_Thread = null;
-	
-	public static Clock2 Clock2 = null;
-	public static Thread Clock2_Thread = null;
 
 	private final JButton btnMinute_1 = new JButton("12 MINUTE");
 	private final JButton btnMinute_2 = new JButton("5 MINUTE");
@@ -348,16 +331,6 @@ public class Main extends JFrame implements ActionListener {
 		btnNewButton.setBounds(772, 0, 12, 8);
 		contentPane.add(btnNewButton);
 		announce("add ??? button");
-
-		Clock = new Clock();
-		Clock_Thread = new Thread(Clock);
-		Clock_Thread.start();
-		announce("START Main clock timer");
-		
-		Clock2 = new Clock2();
-		Clock2_Thread = new Thread(Clock2);
-		Clock2_Thread.start();
-		announce("START Addon-clock timer");
 		
 		JButton button_4 = new JButton("||");
 		button_4.addActionListener(new ActionListener() {
@@ -393,6 +366,10 @@ public class Main extends JFrame implements ActionListener {
 		button_5.setBackground(Color.PINK);
 		button_5.setBounds(10, 276, 47, 42);
 		contentPane.add(button_5);
+		
+		runRunRun();
+		announce("START Main clock timer");
+		announce("START Addon-clock timer");
 	}
 	
 	public void runClockForAddon() {
@@ -400,12 +377,23 @@ public class Main extends JFrame implements ActionListener {
 	}
 	
 	public void runClock() { 
-		Clock.i = 59;
+		Clock.i = 50;
 		Clock.isClockPause = false;
 	}
+	
+	public void runRunRun() {
+		TimerTask task = new TimerTask() {
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+		    @Override
+		    public void run() {
+		        Clock.run();
+		        Clock2.run();
+		        
+		    }
+		};
+
+		Timer timer = new Timer();
+		timer.schedule(task, new Date(), 10);
 	}
 
 	public static synchronized void playSound(String url) {
@@ -422,5 +410,11 @@ public class Main extends JFrame implements ActionListener {
 				}
 			}
 		}).start();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

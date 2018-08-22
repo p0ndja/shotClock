@@ -30,8 +30,8 @@ public class Main extends JFrame implements ActionListener {
 	private JPanel contentPane;
 
 	// Panel Width and Height set here
-	public final int width = 800;
-	public final int height = 600;
+	public final int width = 1330;
+	public final int height = 700;
 	public final String title = "me.palapon2545.SMD.SchoolProject.basketballLeague.shortClock.Main.java.setDisplayTitle('SATIT SHORTCLOCK by PALAPON2545')";
 
 	// Don't change this int zone
@@ -45,12 +45,12 @@ public class Main extends JFrame implements ActionListener {
 
 	public static JProgressBar progressBar = new JProgressBar();
 
-	private final JButton btnMinute_1 = new JButton("12 MINUTE");
-	private final JButton btnMinute_2 = new JButton("5 MINUTE");
-	private final JButton btnMinute_3 = new JButton("3 MINUTE");
-	private final JButton btnMinute_4 = new JButton("1 MINUTE");
-	private final JButton btnSecond = new JButton("24 SECOND");
-	private final JButton btnSecond_1 = new JButton("14 SECOND");
+	private final JButton btnMinute_1 = new JButton("12m");
+	private final JButton btnMinute_2 = new JButton("5m");
+	private final JButton btnMinute_3 = new JButton("3m");
+	private final JButton btnMinute_4 = new JButton("1m");
+	private final JButton btnSecond = new JButton("24s");
+	private final JButton btnSecond_1 = new JButton("14s");
 	public static JLabel label_1 = new JLabel("--:--");
 	public static JLabel label_2 = new JLabel("**");
 	public static JLabel label_left = new JLabel(left + "");
@@ -136,7 +136,7 @@ public class Main extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		announce("config contentPane");
 
-		JButton btnMinute = new JButton("8 MINUTE");
+		JButton btnMinute = new JButton("8m");
 		btnMinute.setBackground(Color.WHITE);
 		btnMinute.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnMinute.addActionListener(new ActionListener() {
@@ -146,7 +146,7 @@ public class Main extends JFrame implements ActionListener {
 				runClock();
 			}
 		});
-		btnMinute.setBounds(184, 11, 131, 20);
+		btnMinute.setBounds(522, 0, 64, 31);
 		contentPane.add(btnMinute);
 		announce("add 8minute button");
 
@@ -159,7 +159,7 @@ public class Main extends JFrame implements ActionListener {
 				runClock();
 			}
 		});
-		btnMinute_1.setBounds(43, 11, 131, 20);
+		btnMinute_1.setBounds(407, 0, 64, 31);
 		contentPane.add(btnMinute_1);
 		announce("add 12minute button");
 
@@ -171,7 +171,7 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		btnMinute_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnMinute_2.setBounds(325, 11, 131, 20);
+		btnMinute_2.setBounds(634, 0, 64, 31);
 		btnMinute_2.setBackground(Color.WHITE);
 		contentPane.add(btnMinute_2);
 		announce("add 5minute button");
@@ -185,7 +185,7 @@ public class Main extends JFrame implements ActionListener {
 		});
 		btnMinute_3.setBackground(Color.WHITE);
 		btnMinute_3.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnMinute_3.setBounds(466, 11, 131, 20);
+		btnMinute_3.setBounds(756, 0, 64, 31);
 		contentPane.add(btnMinute_3);
 		announce("add 3minute button");
 
@@ -198,7 +198,7 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		btnMinute_4.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnMinute_4.setBounds(607, 11, 131, 20);
+		btnMinute_4.setBounds(878, 0, 64, 31);
 		contentPane.add(btnMinute_4);
 		announce("add 1minute button");
 
@@ -210,7 +210,7 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		btnSecond.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnSecond.setBounds(253, 530, 131, 20);
+		btnSecond.setBounds(522, 641, 131, 31);
 		contentPane.add(btnSecond);
 		announce("add 24second button");
 
@@ -222,45 +222,45 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		btnSecond_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnSecond_1.setBounds(394, 530, 131, 20);
+		btnSecond_1.setBounds(663, 641, 131, 31);
 		contentPane.add(btnSecond_1);
 		announce("add 14second button");
 
 		progressBar.setBackground(Color.WHITE);
 		progressBar.setForeground(Color.RED);
-		progressBar.setBounds(85, 290, 610, 14);
+		progressBar.setBounds(67, 432, 1190, 14);
 		contentPane.add(progressBar);
 		announce("add progress bar");
 
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Cordia New", Font.BOLD, 400));
+		label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
 		label_1.setBackground(SystemColor.windowBorder);
-		label_1.setBounds(0, 34, 784, 248);
+		label_1.setBounds(0, 34, 1324, 387);
 		contentPane.add(label_1);
 		announce("add label_1");
 
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(Color.GREEN);
-		label_2.setFont(new Font("Cordia New", Font.BOLD, 200));
+		label_2.setFont(new Font("Cordia New", Font.BOLD, 300));
 		label_2.setBackground(SystemColor.windowBorder);
-		label_2.setBounds(253, 340, 270, 126);
+		label_2.setBounds(435, 432, 448, 185);
 		contentPane.add(label_2);
 		announce("add label_2");
 
 		label_left.setForeground(Color.RED);
-		label_left.setFont(new Font("Angsana New", Font.BOLD, 250));
+		label_left.setFont(new Font("Angsana New", Font.BOLD, 350));
 		label_left.setBackground(Color.WHITE);
 		label_left.setHorizontalAlignment(SwingConstants.CENTER);
-		label_left.setBounds(0, 315, 277, 176);
+		label_left.setBounds(77, 391, 348, 239);
 		contentPane.add(label_left);
 		announce("add label_left");
 
 		label_right.setHorizontalAlignment(SwingConstants.CENTER);
-		label_right.setForeground(Color.BLUE);
-		label_right.setFont(new Font("Angsana New", Font.BOLD, 250));
+		label_right.setForeground(Color.CYAN);
+		label_right.setFont(new Font("Angsana New", Font.BOLD, 350));
 		label_right.setBackground(Color.WHITE);
-		label_right.setBounds(507, 321, 277, 170);
+		label_right.setBounds(893, 394, 369, 233);
 		contentPane.add(label_right);
 		announce("add label_right");
 
@@ -272,7 +272,7 @@ public class Main extends JFrame implements ActionListener {
 				left = left + 1;
 			}
 		});
-		button.setBounds(85, 508, 47, 42);
+		button.setBounds(200, 630, 47, 42);
 		announce("add left-side '+' button");
 
 		contentPane.add(button);
@@ -286,7 +286,7 @@ public class Main extends JFrame implements ActionListener {
 				}
 			}
 		});
-		button_1.setBounds(143, 508, 47, 42);
+		button_1.setBounds(258, 630, 47, 42);
 		contentPane.add(button_1);
 		announce("add left-side '-' button");
 
@@ -298,7 +298,7 @@ public class Main extends JFrame implements ActionListener {
 		});
 		button_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		button_2.setBackground(Color.WHITE);
-		button_2.setBounds(593, 508, 47, 42);
+		button_2.setBounds(1027, 630, 47, 42);
 		contentPane.add(button_2);
 		announce("add right-side '+' button");
 
@@ -312,7 +312,7 @@ public class Main extends JFrame implements ActionListener {
 		});
 		button_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		button_3.setBackground(Color.WHITE);
-		button_3.setBounds(651, 508, 47, 42);
+		button_3.setBounds(1085, 630, 47, 42);
 		contentPane.add(button_3);
 		announce("add right-side '-' button");
 
@@ -324,36 +324,31 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				timeLeft = -1;
 				label_1.setText("MAKE BY PALAPON");
+				label_milli.setVisible(false);
 				label_1.setForeground(Color.YELLOW);
 				label_1.setFont(new Font("Cordia New", Font.BOLD, 120));
 			}
 		});
-		btnNewButton.setBounds(772, 0, 12, 8);
+		btnNewButton.setBounds(1340, 0, 20, 14);
 		contentPane.add(btnNewButton);
 		announce("add ??? button");
 		
 		JButton button_4 = new JButton("||");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean o = true;
-				if (Clock.isClockPause == false) {
-					o = true;
-				} else if (Clock.isClockPause == true) {
-					o = false;
-				}
-				Clock.isClockPause = o;
+				switcher();
 				
 			}
 		});
 		button_4.setBackground(Color.PINK);
-		button_4.setBounds(737, 276, 47, 42);
+		button_4.setBounds(1267, 418, 47, 42);
 		contentPane.add(button_4);
 		
 		label_milli.setVisible(false);
 		label_milli.setHorizontalAlignment(SwingConstants.CENTER);
 		label_milli.setForeground(Color.WHITE);
-		label_milli.setFont(new Font("Cordia New", Font.BOLD, 300));
-		label_milli.setBounds(439, 42, 256, 237);
+		label_milli.setFont(new Font("Cordia New", Font.BOLD, 400));
+		label_milli.setBounds(690, 42, 398, 366);
 		contentPane.add(label_milli);
 		
 		JButton button_5 = new JButton("S");
@@ -364,8 +359,28 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		button_5.setBackground(Color.PINK);
-		button_5.setBounds(10, 276, 47, 42);
+		button_5.setBounds(10, 418, 47, 42);
 		contentPane.add(button_5);
+		
+		JButton button_6 = new JButton("||");
+		button_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				switcher();
+			}
+		});
+		button_6.setBackground(Color.PINK);
+		button_6.setBounds(804, 630, 47, 42);
+		contentPane.add(button_6);
+		
+		JButton button_7 = new JButton("||");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switcher();
+			}
+		});
+		button_7.setBackground(Color.PINK);
+		button_7.setBounds(461, 628, 47, 42);
+		contentPane.add(button_7);
 		
 		runRunRun();
 		announce("START Main clock timer");
@@ -373,11 +388,13 @@ public class Main extends JFrame implements ActionListener {
 	}
 	
 	public void runClockForAddon() {
+		Clock2.i = 10;
 		Clock.isClockPause = false;
 	}
 	
 	public void runClock() { 
-		Clock.i = 50;
+		Clock.i = 10;
+		Clock2.i = 10;
 		Clock.isClockPause = false;
 	}
 	
@@ -393,7 +410,17 @@ public class Main extends JFrame implements ActionListener {
 		};
 
 		Timer timer = new Timer();
-		timer.schedule(task, new Date(), 10);
+		timer.schedule(task, new Date(), 100);
+	}
+	
+	public void switcher() {
+		boolean o = true;
+		if (Clock.isClockPause == false) {
+			o = true;
+		} else if (Clock.isClockPause == true) {
+			o = false;
+		}
+		Clock.isClockPause = o;
 	}
 
 	public static synchronized void playSound(String url) {

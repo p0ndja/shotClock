@@ -15,8 +15,13 @@ import javax.swing.JProgressBar;
 public class Clock {
 
 	public static boolean isClockPause = true;
+	public static boolean isTimeOutClockPause = true;
+	public static boolean isSubClockPause = true;
 
 	public static int i = 1;
+
+	public static int timeOutStartI = 1;
+	public static int subClockStartI = 1;
 
 	public static int PercentCalculate(int second) {
 		int percent = 100 - ((second * 100) / Main.timeStart);
@@ -29,51 +34,95 @@ public class Clock {
 		long second = c % (60);
 		String mm = minute + "";
 		String ss = second + "";
-		if (minute < 10) {
-			mm = "0" + minute;
-		}
 
-		if (second < 10) {
+		if (minute < 10)
+			mm = "0" + minute;
+		if (second < 10)
 			ss = "0" + second;
-		}
+
 		return mm + ":" + ss;
 	}
 
 	public static void run() {
+		DateFormat normalTimeFormat = new SimpleDateFormat("HH:mm:ss");
+		String Time = "<" + normalTimeFormat.format(new Date()) + "> ";
+
 		int m = 10;
-		if (isClockPause == true) {
 
-		} else {
+		// This part for TimeOut Clock
+		// =====================================================================\\
+		if (isTimeOutClockPause == false) {
+			if (isClockPause == true && i != m) {
+				i = i + 1;
+				Main.announce(i + "");
+			} else if (isClockPause == true && i == m) {
+				i = 1;
+			}
+
+			if (i == timeOutStartI) {
+				if (Main.timeTimeOut > 0) {
+					TimeOutClockPopup.main.setText(CalculateTimer(Main.timeTimeOut) + "");
+					Main.timeTimeOut--;
+					Main.announce(Time + "timeOut set from " + Main.timeTimeOut + " -> " + (Main.timeTimeOut - 1));
+				} else if (Main.timeTimeOut == 0) {
+					TimeOutClockPopup.main.setText(CalculateTimer(Main.timeTimeOut) + "");
+					Main.timeTimeOut--;
+					Main.announce(Time + "timeOut set from " + Main.timeTimeOut + " -> 0");
+					Main.playSound("timeOut.wav");
+					// Clock.isTimeOutClockPause = true;
+				} else {
+					// Do nothing
+				}
+			}
+		}
+		// =====================================================================\\
+
+		if (isClockPause != true) {
+			// This part for millisecond
+			// =====================================================================\\
 			if (i < m) {
-
 				if (Main.timeLeft == -1) {
 					Main.label_milli.setText("0");
 				} else {
 					Main.label_milli.setText((m - i) + "");
 				}
-				
-				i = i + 1;
-
+				i++;
 			} else if (i == m) {
+				i = 1;
+			} else {
+				i = m;
+			}
+			// =====================================================================\\
 
-				DateFormat normalDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				DateFormat normalTimeFormat = new SimpleDateFormat("HH:mm:ss");
-				Date date = new Date();
-				String Time = normalTimeFormat.format(date);
-				String Date = normalDateFormat.format(date);
+			// This part for Sub Clock
+			// =====================================================================\\
+			if (i == subClockStartI) {
+				if (isSubClockPause != true) {
+					if (Main.subClock > 0) {
+						Main.label_2.setText(Main.subClock + "");
+						int I = Main.subClock - 1;
+						Main.announce(Time + "subClock set from " + Main.subClock + " -> " + I);
+						Main.subClock = I;
+					} else if (Main.subClock == 0) {
+						Main.label_2.setText("**");
+						Main.announce(Time + "subClock set from " + Main.subClock + " -> " + 0);
+						Main.subClock = -1;
+						Main.playSound("timeOut.wav");
+					}
+				}
+			}
+			// =====================================================================\\
 
-				/*
-				 * if (Time.equalsIgnoreCase("23:59:59")) { Main.announce("DAY PASSED"); }
-				 */
-
-				String time_ = "<" + Time + "> ";
+			// This part for Main Clock
+			// =====================================================================\\
+			if (i == m) {
 
 				if (Main.timeLeft >= 60) {
 					int I = Main.timeLeft - 1;
 					Main.label_1.setForeground(Color.WHITE);
 					Main.label_1.setText(CalculateTimer(Main.timeLeft));
 					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
-					Main.announce(time_ + "[timeLeft] set from " + Main.timeLeft + " -> " + I + " ("
+					Main.announce(Time + "[timeLeft] set from " + Main.timeLeft + " -> " + I + " ("
 							+ PercentCalculate(Main.timeLeft) + "% complete)");
 					Main.timeLeft = I;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
@@ -84,18 +133,18 @@ public class Clock {
 					Main.label_1.setForeground(Color.WHITE);
 					Main.label_1.setText(Main.timeLeft + ".__");
 					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
-					Main.announce(time_ + "[timeLeft] set from " + Main.timeLeft + " -> " + I + " ("
+					Main.announce(Time + "[timeLeft] set from " + Main.timeLeft + " -> " + I + " ("
 							+ PercentCalculate(Main.timeLeft) + "% complete)");
 					Main.timeLeft = I;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 				} else if (Main.timeLeft == 0) {
 					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
 					Main.label_1.setText(Main.timeLeft + ".__");
-					Main.announce(time_ + "[timeLeft] set from " + Main.timeLeft + " -> " + 0 + " ("
+					Main.announce(Time + "[timeLeft] set from " + Main.timeLeft + " -> " + 0 + " ("
 							+ PercentCalculate(Main.timeLeft) + "% complete)");
 					Main.timeLeft = -1;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
-					Main.announce(time_ + "[timeLeft] set message to 'TIME UP!'");
+					Main.announce(Time + "[timeLeft] TIME UP!");
 					Main.playSound("timeOut.wav");
 					Main.label_milli.setText("0");
 
@@ -105,10 +154,8 @@ public class Clock {
 
 				Main.label_milli.setText((m - i) + "");
 				i = 1;
-
-			} else {
-				i = m;
 			}
+			// =====================================================================\\
 		}
 	}
 }

@@ -24,6 +24,7 @@ import java.awt.SystemColor;
 import javax.swing.JProgressBar;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Canvas;
 
 public class Main extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 561811103320831759L;
@@ -62,6 +63,7 @@ public class Main extends JFrame implements ActionListener {
 	private final JButton button_3 = new JButton("-");
 	public static JLabel label_milli = new JLabel(" ");
 	private final JButton button_8 = new JButton("หยุด+เสียง");
+	private final JButton button_10 = new JButton("-1");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -426,6 +428,37 @@ public class Main extends JFrame implements ActionListener {
 		btnShotclock.setBackground(Color.YELLOW);
 		btnShotclock.setBounds(386, 628, 126, 42);
 		contentPane.add(btnShotclock);
+		
+		JButton button_9 = new JButton("+1");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				timeLeft = timeLeft + 60;
+				timeStart = timeLeft;
+				if (Clock.isClockPause == true) {
+					if (timeLeft < 60)
+						timeLeft++;
+					label_1.setText(Clock.CalculateTimer(timeLeft));
+				}
+			}
+		});
+		button_9.setFont(new Font("Tahoma", Font.BOLD, 13));
+		button_9.setBackground(Color.WHITE);
+		button_9.setBounds(156, 0, 57, 31);
+		contentPane.add(button_9);
+		button_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (timeLeft > 60) {
+				timeLeft = timeLeft - 60;
+				timeStart = timeLeft;
+				label_1.setText(Clock.CalculateTimer(timeLeft));
+				}
+			}
+		});
+		button_10.setFont(new Font("Tahoma", Font.BOLD, 13));
+		button_10.setBackground(Color.WHITE);
+		button_10.setBounds(223, 0, 51, 31);
+		
+		contentPane.add(button_10);
 		
 		JButton button_7 = new JButton("||");
 		button_7.addActionListener(new ActionListener() {

@@ -87,6 +87,11 @@ public class Clock {
 					Main.label_milli.setText((m - i) + "");
 				}
 				i++;
+				if (Main.timeLeft > 60) {
+					Main.label_1.setForeground(Color.WHITE);
+					Main.label_1.setText(CalculateTimer(Main.timeLeft));
+					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
+				}
 			} else if (i == m) {
 				i = 1;
 			} else {

@@ -1,0 +1,10 @@
+**IMPORTANT**
+Please install Java 8 SE Runtime Environment before running this Java Application.
+Or you can running this Jar file from Java Library. (This way no introduction included but I had tested it)
+
+This Java Apllication only compatible with Java 8 and early.
+
+Feel free to edit/apply this project by yourself from source code in
+"https://github.com/palapon2545/shotClock"
+
+-- Please notice that this project has GNU License! --

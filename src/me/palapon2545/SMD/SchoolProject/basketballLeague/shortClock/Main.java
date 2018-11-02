@@ -33,19 +33,25 @@ public class Main extends JFrame implements ActionListener {
 	// Panel Width and Height set here
 	public final int width = 1330;
 	public final int height = 700;
-	public final String title = "me.palapon2545.SMD.SchoolProject.basketballLeague.shortClock.Main.java.setDisplayTitle('SATIT SHORTCLOCK by PALAPON2545')";
+	public final String title = "SHOTCLOCK";
 
 	// Don't change this int zone
-	//==============================\\
+	// ==============================\\
 	public static int timeLeft = -1;
 	public static int timeStart = -1;
 	public static int subClock = -1;
 	public static int timeTimeOut = -1;
 	public static int left = 0;
 	public static int right = 0;
-	//==============================\\
+	public static String bubble = " ";
+	// ==============================\\
 
 	public static JProgressBar progressBar = new JProgressBar();
+	public static JLabel label_1 = new JLabel("--:--");
+	public static JLabel label_2 = new JLabel("**");
+	public static JLabel label_left = new JLabel(left + "");
+	public static JLabel label_right = new JLabel(right + "");
+	public static JLabel label_milli = new JLabel(" ");
 
 	private final JButton btnMinute_1 = new JButton("12m");
 	private final JButton btnMinute_2 = new JButton("5m");
@@ -53,24 +59,19 @@ public class Main extends JFrame implements ActionListener {
 	private final JButton btnMinute_4 = new JButton("1m");
 	private final JButton btnSecond = new JButton("24s");
 	private final JButton btnSecond_1 = new JButton("14s");
-	public static JLabel label_1 = new JLabel("--:--");
-	public static JLabel label_2 = new JLabel("**");
-	public static JLabel label_left = new JLabel(left + "");
-	public static JLabel label_right = new JLabel(right + "");
 	private final JButton button = new JButton("+");
 	private final JButton button_1 = new JButton("-");
 	private final JButton button_2 = new JButton("+");
 	private final JButton button_3 = new JButton("-");
-	public static JLabel label_milli = new JLabel(" ");
-	private final JButton button_8 = new JButton("หยุด+เสียง");
-	private final JButton button_10 = new JButton("-1");
+	private final JButton button_10 = new JButton("-1m");
+	private final JButton button_5 = new JButton("SOUND");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//License check by 'MAC-Address'
-					//=================================================================================\\
+					// License check by 'MAC-Address'
+					// =================================================================================\\
 					if (MAC_ADDRESS.mac_address_strict_mode == true) {
 						MAC_ADDRESS.main();
 						if (!MAC_ADDRESS.mac_address_list.contains(MAC_ADDRESS.mac_address_this_user)) {
@@ -85,8 +86,8 @@ public class Main extends JFrame implements ActionListener {
 						Main frame = new Main();
 						frame.setVisible(true);
 					}
-					//=================================================================================\\
-					
+					// =================================================================================\\
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -126,12 +127,12 @@ public class Main extends JFrame implements ActionListener {
 		announce("set gui border");
 		announce(" * width = " + width);
 		announce(" * height = " + height);
-		
-		//This code below block user to resize windows
-		//===========================================\\
+
+		// This code below block user to resize windows
+		// ===========================================\\
 		setPreferredSize(new Dimension(width, height));
 		setResizable(false);
-		//===========================================\\
+		// ===========================================\\
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -169,7 +170,7 @@ public class Main extends JFrame implements ActionListener {
 
 		btnMinute_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				timeLeft = 300;
+				timeLeft = 5;
 				timeStart = timeLeft;
 				runClock();
 			}
@@ -238,37 +239,9 @@ public class Main extends JFrame implements ActionListener {
 		progressBar.setBounds(128, 432, 1077, 14);
 		contentPane.add(progressBar);
 		announce("add progress bar");
-
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
-		label_1.setBackground(SystemColor.windowBorder);
-		label_1.setBounds(0, 34, 1324, 387);
-		contentPane.add(label_1);
 		announce("add label_1");
-
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setForeground(Color.GREEN);
-		label_2.setFont(new Font("Cordia New", Font.BOLD, 300));
-		label_2.setBackground(SystemColor.windowBorder);
-		label_2.setBounds(435, 432, 448, 185);
-		contentPane.add(label_2);
 		announce("add label_2");
-
-		label_left.setForeground(Color.RED);
-		label_left.setFont(new Font("Angsana New", Font.BOLD, 350));
-		label_left.setBackground(Color.WHITE);
-		label_left.setHorizontalAlignment(SwingConstants.CENTER);
-		label_left.setBounds(77, 394, 348, 236);
-		contentPane.add(label_left);
 		announce("add label_left");
-
-		label_right.setHorizontalAlignment(SwingConstants.CENTER);
-		label_right.setForeground(Color.CYAN);
-		label_right.setFont(new Font("Angsana New", Font.BOLD, 350));
-		label_right.setBackground(Color.WHITE);
-		label_right.setBounds(893, 394, 369, 233);
-		contentPane.add(label_right);
 		announce("add label_right");
 
 		button.setBackground(Color.WHITE);
@@ -339,80 +312,42 @@ public class Main extends JFrame implements ActionListener {
 		btnNewButton.setBounds(1340, 0, 20, 14);
 		contentPane.add(btnNewButton);
 		announce("add ??? button");
-		
-		JButton button_4 = new JButton("หยุดเวลา");
-		button_4.addActionListener(new ActionListener() {
+
+		JButton btnPause_1 = new JButton("PAUSE");
+		btnPause_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnPause_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				switcher();
-				
+
 			}
 		});
-		button_4.setBackground(Color.PINK);
-		button_4.setBounds(1215, 419, 99, 42);
-		contentPane.add(button_4);
-		
-		label_milli.setVisible(false);
-		label_milli.setHorizontalAlignment(SwingConstants.CENTER);
-		label_milli.setForeground(Color.WHITE);
-		label_milli.setFont(new Font("Cordia New", Font.BOLD, 400));
-		label_milli.setBounds(690, 42, 398, 366);
-		contentPane.add(label_milli);
-		
-		JButton button_5 = new JButton("เสียง");
-		button_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_5.addActionListener(new ActionListener() {
+		btnPause_1.setBackground(Color.PINK);
+		btnPause_1.setBounds(1215, 394, 99, 42);
+		contentPane.add(btnPause_1);
+
+		JButton btnSound = new JButton("SOUND");
+		btnSound.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnSound.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				playSound("timeOut.wav");
 			}
 		});
-		button_5.setBackground(Color.PINK);
-		button_5.setBounds(10, 439, 108, 42);
-		contentPane.add(button_5);
-		
-		JButton button_6 = new JButton("หยุดเวลา");
-		button_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_6.addActionListener(new ActionListener() {
+		btnSound.setBackground(Color.PINK);
+		btnSound.setBounds(10, 439, 99, 42);
+		contentPane.add(btnSound);
+
+		JButton btnPause = new JButton("PAUSE");
+		btnPause.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				switcher();
 			}
 		});
-		button_6.setBackground(Color.PINK);
-		button_6.setBounds(804, 630, 92, 42);
-		contentPane.add(button_6);
-		button_8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Clock.isClockPause = true;
-				playSound("timeOut.wav");
-			}
-		});
-		button_8.setBackground(Color.PINK);
-		button_8.setBounds(10, 379, 108, 42);
-		
-		contentPane.add(button_8);
-		
-		JLabel lblTimeout = new JLabel("สำหรับ TIMEOUT / BREAK");
-		lblTimeout.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTimeout.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTimeout.setForeground(Color.PINK);
-		lblTimeout.setBounds(787, 42, 155, 14);
-		contentPane.add(lblTimeout);
-		
-		JLabel lblMatch = new JLabel("สำหรับ Match ปกติ");
-		lblMatch.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMatch.setForeground(Color.GREEN);
-		lblMatch.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMatch.setBounds(355, 42, 179, 14);
-		contentPane.add(lblMatch);
-		
-		JLabel label = new JLabel("สำหรับต่อเวลาเสมอ");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(Color.CYAN);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label.setBounds(583, 42, 179, 14);
-		contentPane.add(label);
-		
-		JButton btnShotclock = new JButton("หยุด ShotClock");
+		btnPause.setBackground(Color.PINK);
+		btnPause.setBounds(804, 630, 92, 42);
+		contentPane.add(btnPause);
+
+		JButton btnShotclock = new JButton("Pause ShotClock");
 		btnShotclock.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnShotclock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -428,9 +363,9 @@ public class Main extends JFrame implements ActionListener {
 		btnShotclock.setBackground(Color.YELLOW);
 		btnShotclock.setBounds(386, 628, 126, 42);
 		contentPane.add(btnShotclock);
-		
-		JButton button_9 = new JButton("+1");
-		button_9.addActionListener(new ActionListener() {
+
+		JButton btnm = new JButton("+1m");
+		btnm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				timeLeft = timeLeft + 60;
 				timeStart = timeLeft;
@@ -439,61 +374,142 @@ public class Main extends JFrame implements ActionListener {
 						timeLeft++;
 					label_1.setText(Clock.CalculateTimer(timeLeft));
 				}
+				runClock();
 			}
 		});
-		button_9.setFont(new Font("Tahoma", Font.BOLD, 13));
-		button_9.setBackground(Color.WHITE);
-		button_9.setBounds(156, 0, 57, 31);
-		contentPane.add(button_9);
+		btnm.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnm.setBackground(Color.WHITE);
+		btnm.setBounds(147, 0, 67, 31);
+		contentPane.add(btnm);
 		button_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (timeLeft > 60) {
-				timeLeft = timeLeft - 60;
-				timeStart = timeLeft;
-				label_1.setText(Clock.CalculateTimer(timeLeft));
+					timeLeft = timeLeft - 60;
+					timeStart = timeLeft;
+					label_1.setText(Clock.CalculateTimer(timeLeft));
 				}
+				runClock();
 			}
 		});
 		button_10.setFont(new Font("Tahoma", Font.BOLD, 13));
 		button_10.setBackground(Color.WHITE);
-		button_10.setBounds(223, 0, 51, 31);
-		
+		button_10.setBounds(223, 0, 67, 31);
+
 		contentPane.add(button_10);
-		
+
+		JButton button_4 = new JButton("PAUSE");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				switcher();
+			}
+		});
+		button_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		button_4.setBackground(Color.PINK);
+		button_4.setBounds(10, 394, 99, 42);
+		contentPane.add(button_4);
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				playSound("timeOut.wav");
+			}
+		});
+		button_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		button_5.setBackground(Color.PINK);
+		button_5.setBounds(1215, 439, 99, 42);
+
+		contentPane.add(button_5);
+
+		JLabel lblTimeout = new JLabel("TIMEOUT / BREAK");
+		lblTimeout.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTimeout.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblTimeout.setForeground(Color.PINK);
+		lblTimeout.setBounds(787, 42, 155, 14);
+		contentPane.add(lblTimeout);
+
+		JLabel lblMatch = new JLabel("Match");
+		lblMatch.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMatch.setForeground(Color.GREEN);
+		lblMatch.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMatch.setBounds(355, 42, 179, 14);
+		contentPane.add(lblMatch);
+
+		JLabel label = new JLabel("Draw Match");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.CYAN);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(583, 42, 179, 14);
+		contentPane.add(label);
+
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
+		label_1.setBackground(SystemColor.windowBorder);
+		label_1.setBounds(0, 34, 1324, 387);
+		contentPane.add(label_1);
+
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setForeground(Color.GREEN);
+		label_2.setFont(new Font("Cordia New", Font.BOLD, 300));
+		label_2.setBackground(SystemColor.windowBorder);
+		label_2.setBounds(435, 432, 448, 185);
+		contentPane.add(label_2);
+
+		label_left.setForeground(Color.RED);
+		label_left.setFont(new Font("Angsana New", Font.BOLD, 350));
+		label_left.setBackground(Color.WHITE);
+		label_left.setHorizontalAlignment(SwingConstants.CENTER);
+		label_left.setBounds(77, 394, 348, 236);
+		contentPane.add(label_left);
+
+		label_right.setHorizontalAlignment(SwingConstants.CENTER);
+		label_right.setForeground(Color.CYAN);
+		label_right.setFont(new Font("Angsana New", Font.BOLD, 350));
+		label_right.setBackground(Color.WHITE);
+		label_right.setBounds(893, 394, 369, 233);
+		contentPane.add(label_right);
+
+		label_milli.setVisible(false);
+		label_milli.setHorizontalAlignment(SwingConstants.CENTER);
+		label_milli.setForeground(Color.WHITE);
+		label_milli.setFont(new Font("Cordia New", Font.BOLD, 400));
+		label_milli.setBounds(690, 42, 398, 366);
+		contentPane.add(label_milli);
+
 		JButton button_7 = new JButton("||");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switcher();
 			}
 		});
-		
+
 		runRunRun();
 		announce("START Main clock timer");
 		announce("START Addon-clock timer");
 	}
-	
+
 	public void runClockForAddon() {
 		Clock.isClockPause = false;
 		Clock.isSubClockPause = false;
 	}
-	
+
 	public void runClock() {
-		if (timeLeft == -1) 
-		Clock.i = 10;
+		if (timeLeft == -1)
+			Clock.i = 10;
 		Clock.isClockPause = false;
+		if (timeLeft > 60) label_milli.setVisible(false);
 	}
-	
+
 	public void runRunRun() {
 		TimerTask task = new TimerTask() {
-		    @Override
-		    public void run() {
-		        Clock.run();
-		    }
+			@Override
+			public void run() {
+				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+				Clock.run();				
+			}
 		};
 		Timer timer = new Timer();
 		timer.schedule(task, new Date(), 100);
 	}
-		
+
 	public void switcher() {
 		boolean o = true;
 		if (Clock.isClockPause == false) {
@@ -503,7 +519,7 @@ public class Main extends JFrame implements ActionListener {
 		}
 		Clock.isClockPause = o;
 	}
-	
+
 	public void runClockTimeOut() {
 		TimeOutClockPopup popup = new TimeOutClockPopup();
 		popup.setVisible(true);
@@ -528,6 +544,6 @@ public class Main extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

@@ -29,9 +29,9 @@ public class Clock {
 	}
 
 	public static String CalculateTimer(int timeInSecond) {
-		long c = timeInSecond;
-		long minute = c / (60);
-		long second = c % (60);
+		int c = timeInSecond;
+		int minute = c / (60);
+		int second = c % (60);
 		String mm = minute + "";
 		String ss = second + "";
 
@@ -44,9 +44,8 @@ public class Clock {
 	}
 
 	public static void run() {
-		DateFormat normalTimeFormat = new SimpleDateFormat("HH:mm:ss");
-		String Time = "<" + normalTimeFormat.format(new Date()) + "> ";
-
+		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+		String Time = "<" + (new SimpleDateFormat("HH:mm:ss").format(new Date())) + "> ";
 		int m = 10;
 
 		// This part for TimeOut Clock
@@ -58,7 +57,6 @@ public class Clock {
 			} else if (isClockPause == true && i == m) {
 				i = 1;
 			}
-
 			if (i == timeOutStartI) {
 				if (Main.timeTimeOut > 0) {
 					TimeOutClockPopup.main.setText(CalculateTimer(Main.timeTimeOut) + "");
@@ -81,39 +79,31 @@ public class Clock {
 			// This part for millisecond
 			// =====================================================================\\
 			if (i < m) {
-				if (Main.timeLeft == -1) {
+				if (Main.timeLeft == -1)
 					Main.label_milli.setText("0");
-				} else {
+				else
 					Main.label_milli.setText((m - i) + "");
-				}
 				i++;
-				if (Main.timeLeft > 60) {
-					Main.label_1.setForeground(Color.WHITE);
-					Main.label_1.setText(CalculateTimer(Main.timeLeft));
-					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
-				}
-			} else if (i == m) {
+			} else
 				i = 1;
-			} else {
-				i = m;
-			}
+
 			// =====================================================================\\
 
 			// This part for Sub Clock
 			// =====================================================================\\
 			if (i == subClockStartI) {
 				if (isSubClockPause != true) {
+					int I = Main.subClock - 1;
 					if (Main.subClock > 0) {
 						Main.label_2.setText(Main.subClock + "");
-						int I = Main.subClock - 1;
-						Main.announce(Time + "subClock set from " + Main.subClock + " -> " + I);
-						Main.subClock = I;
+						Main.subClock--;
 					} else if (Main.subClock == 0) {
 						Main.label_2.setText("**");
-						Main.announce(Time + "subClock set from " + Main.subClock + " -> " + 0);
-						Main.subClock = -1;
+						Main.subClock--;
 						Main.playSound("timeOut.wav");
+						I = 0;
 					}
+					Main.announce(Time + "subClock set from " + Main.subClock + " -> " + I);
 				}
 			}
 			// =====================================================================\\
@@ -121,43 +111,31 @@ public class Clock {
 			// This part for Main Clock
 			// =====================================================================\\
 			if (i == m) {
-
 				if (Main.timeLeft >= 60) {
-					int I = Main.timeLeft - 1;
-					Main.label_1.setForeground(Color.WHITE);
 					Main.label_1.setText(CalculateTimer(Main.timeLeft));
-					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
-					Main.announce(Time + "[timeLeft] set from " + Main.timeLeft + " -> " + I + " ("
+					Main.announce(Time + "[timeLeft] " + Main.timeLeft + " -> " + (Main.timeLeft - 1) + " ("
 							+ PercentCalculate(Main.timeLeft) + "% complete)");
-					Main.timeLeft = I;
+					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 					Main.label_milli.setVisible(false);
 				} else if (Main.timeLeft < 60 && Main.timeLeft > 0) {
 					Main.label_milli.setVisible(true);
 					int I = Main.timeLeft - 1;
-					Main.label_1.setForeground(Color.WHITE);
 					Main.label_1.setText(Main.timeLeft + ".__");
-					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
-					Main.announce(Time + "[timeLeft] set from " + Main.timeLeft + " -> " + I + " ("
-							+ PercentCalculate(Main.timeLeft) + "% complete)");
-					Main.timeLeft = I;
+					Main.announce(Time + "[timeLeft] " + Main.timeLeft + " -> " + (Main.timeLeft - 1) + " ("
+							+ PercentCalculate(Main.timeLeft) + "%)");
+					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 				} else if (Main.timeLeft == 0) {
-					Main.label_1.setFont(new Font("Cordia New", Font.BOLD, 600));
 					Main.label_1.setText(Main.timeLeft + ".__");
-					Main.announce(Time + "[timeLeft] set from " + Main.timeLeft + " -> " + 0 + " ("
-							+ PercentCalculate(Main.timeLeft) + "% complete)");
-					Main.timeLeft = -1;
+					Main.announce(Time + "[timeLeft] " + Main.timeLeft + " -> 0 ("
+							+ PercentCalculate(Main.timeLeft) + "%)");
+					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 					Main.announce(Time + "[timeLeft] TIME UP!");
 					Main.playSound("timeOut.wav");
 					Main.label_milli.setText("0");
-
-				} else {
-					// Do nothing
 				}
-
-				Main.label_milli.setText((m - i) + "");
 				i = 1;
 			}
 			// =====================================================================\\

@@ -24,8 +24,7 @@ public class Clock {
 	public static int subClockStartI = 1;
 
 	public static int PercentCalculate(int second) {
-		int percent = 100 - ((second * 100) / Main.timeStart);
-		return percent;
+		return 100 - ((second * 100) / Main.timeStart);
 	}
 
 	public static String CalculateTimer(int timeInSecond) {
@@ -44,7 +43,7 @@ public class Clock {
 	}
 
 	public static void run() {
-		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
 		String Time = "<" + (new SimpleDateFormat("HH:mm:ss").format(new Date())) + "> ";
 		int m = 10;
 
@@ -52,11 +51,10 @@ public class Clock {
 		// =====================================================================\\
 		if (isTimeOutClockPause == false) {
 			if (isClockPause == true && i != m) {
-				i = i + 1;
+				i++;
 				Main.announce(i + "");
-			} else if (isClockPause == true && i == m) {
+			} else if (isClockPause == true && i == m)
 				i = 1;
-			}
 			if (i == timeOutStartI) {
 				if (Main.timeTimeOut > 0) {
 					TimeOutClockPopup.main.setText(CalculateTimer(Main.timeTimeOut) + "");
@@ -68,8 +66,6 @@ public class Clock {
 					Main.announce(Time + "timeOut set from " + Main.timeTimeOut + " -> 0");
 					Main.playSound("timeOut.wav");
 					// Clock.isTimeOutClockPause = true;
-				} else {
-					// Do nothing
 				}
 			}
 		}
@@ -78,14 +74,16 @@ public class Clock {
 		if (isClockPause != true) {
 			// This part for millisecond
 			// =====================================================================\\
-			if (i < m) {
+			if (Main.timeLeft < 59 && Main.timeLeft > 0) {
+				
+				Main.label_milli.setVisible(true);
+				
 				if (Main.timeLeft == -1)
 					Main.label_milli.setText("0");
 				else
 					Main.label_milli.setText((m - i) + "");
-				i++;
 			} else
-				i = 1;
+				Main.label_milli.setVisible(false);
 
 			// =====================================================================\\
 
@@ -117,27 +115,26 @@ public class Clock {
 							+ PercentCalculate(Main.timeLeft) + "% complete)");
 					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
-					Main.label_milli.setVisible(false);
 				} else if (Main.timeLeft < 60 && Main.timeLeft > 0) {
-					Main.label_milli.setVisible(true);
-					int I = Main.timeLeft - 1;
 					Main.label_1.setText(Main.timeLeft + ".__");
 					Main.announce(Time + "[timeLeft] " + Main.timeLeft + " -> " + (Main.timeLeft - 1) + " ("
 							+ PercentCalculate(Main.timeLeft) + "%)");
 					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 				} else if (Main.timeLeft == 0) {
-					Main.label_1.setText(Main.timeLeft + ".__");
-					Main.announce(Time + "[timeLeft] " + Main.timeLeft + " -> 0 ("
-							+ PercentCalculate(Main.timeLeft) + "%)");
+					Main.label_1.setText("TIME UP");
+					Main.announce(
+							Time + "[timeLeft] " + Main.timeLeft + " -> 0 (" + PercentCalculate(Main.timeLeft) + "%)");
 					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 					Main.announce(Time + "[timeLeft] TIME UP!");
 					Main.playSound("timeOut.wav");
-					Main.label_milli.setText("0");
 				}
-				i = 1;
 			}
+			if (i < m)
+				i++;
+			else
+				i = 1;
 			// =====================================================================\\
 		}
 	}

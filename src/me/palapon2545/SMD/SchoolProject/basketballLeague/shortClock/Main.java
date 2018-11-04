@@ -1,30 +1,29 @@
 package me.palapon2545.SMD.SchoolProject.basketballLeague.shortClock;
 
 import java.awt.Color;
+import java.awt.SystemColor;
+import java.awt.Font;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.Date;
 import java.util.TimerTask;
-
 import java.util.Timer;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import java.awt.Font;
 import javax.swing.SwingConstants;
-import java.awt.SystemColor;
 import javax.swing.JProgressBar;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Canvas;
 
 public class Main extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 561811103320831759L;
@@ -33,7 +32,7 @@ public class Main extends JFrame implements ActionListener {
 	// Panel Width and Height set here
 	public final int width = 1330;
 	public final int height = 700;
-	public final String title = "SHOTCLOCK";
+	public final String title = "ShotClock";
 
 	// Don't change this int zone
 	// ==============================\\
@@ -43,7 +42,6 @@ public class Main extends JFrame implements ActionListener {
 	public static int timeTimeOut = -1;
 	public static int left = 0;
 	public static int right = 0;
-	public static String bubble = " ";
 	// ==============================\\
 
 	public static JProgressBar progressBar = new JProgressBar();
@@ -70,24 +68,8 @@ public class Main extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					// License check by 'MAC-Address'
-					// =================================================================================\\
-					if (MAC_ADDRESS.mac_address_strict_mode == true) {
-						MAC_ADDRESS.main();
-						if (!MAC_ADDRESS.mac_address_list.contains(MAC_ADDRESS.mac_address_this_user)) {
-							LicensePopup popup = new LicensePopup();
-							popup.setVisible(true);
-						} else {
-							Main frame = new Main();
-							frame.setVisible(true);
-						}
-					} else {
-						announce("MAC_ADDRESS_STRICT = false");
-						Main frame = new Main();
-						frame.setVisible(true);
-					}
-					// =================================================================================\\
-
+					Main frame = new Main();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -108,7 +90,7 @@ public class Main extends JFrame implements ActionListener {
 		announce(" THANKS FOR USING IT!");
 		announce(" ");
 		announce(" FEEL FREE TO GET SOURCE-CODE ON MY GITHUB");
-		announce("   \"https://github.com/p0ndja\"");
+		announce("   \"https://github.com/palapon2545\"");
 		announce(" ");
 		announce(" ALSO MY FACEBOOK");
 		announce("   \"https://fb.me/p0ndja\"");
@@ -170,7 +152,7 @@ public class Main extends JFrame implements ActionListener {
 
 		btnMinute_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				timeLeft = 5;
+				timeLeft = 300;
 				timeStart = timeLeft;
 				runClock();
 			}
@@ -309,7 +291,7 @@ public class Main extends JFrame implements ActionListener {
 				label_1.setFont(new Font("Cordia New", Font.BOLD, 120));
 			}
 		});
-		btnNewButton.setBounds(1340, 0, 20, 14);
+		btnNewButton.setBounds(1305, 0, 20, 14);
 		contentPane.add(btnNewButton);
 		announce("add ??? button");
 
@@ -318,7 +300,6 @@ public class Main extends JFrame implements ActionListener {
 		btnPause_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				switcher();
-
 			}
 		});
 		btnPause_1.setBackground(Color.PINK);
@@ -351,13 +332,10 @@ public class Main extends JFrame implements ActionListener {
 		btnShotclock.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnShotclock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean o = true;
-				if (Clock.isSubClockPause == false) {
-					o = true;
-				} else if (Clock.isSubClockPause == true) {
-					o = false;
-				}
-				Clock.isSubClockPause = o;
+				if (Clock.isSubClockPause == false)
+					Clock.isSubClockPause = true;
+				else
+					Clock.isSubClockPause = false;
 			}
 		});
 		btnShotclock.setBackground(Color.YELLOW);
@@ -384,7 +362,7 @@ public class Main extends JFrame implements ActionListener {
 		button_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (timeLeft > 60) {
-					timeLeft = timeLeft - 60;
+					timeLeft -= 60;
 					timeStart = timeLeft;
 					label_1.setText(Clock.CalculateTimer(timeLeft));
 				}
@@ -474,13 +452,6 @@ public class Main extends JFrame implements ActionListener {
 		label_milli.setBounds(690, 42, 398, 366);
 		contentPane.add(label_milli);
 
-		JButton button_7 = new JButton("||");
-		button_7.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				switcher();
-			}
-		});
-
 		runRunRun();
 		announce("START Main clock timer");
 		announce("START Addon-clock timer");
@@ -495,7 +466,6 @@ public class Main extends JFrame implements ActionListener {
 		if (timeLeft == -1)
 			Clock.i = 10;
 		Clock.isClockPause = false;
-		if (timeLeft > 60) label_milli.setVisible(false);
 	}
 
 	public void runRunRun() {
@@ -503,7 +473,7 @@ public class Main extends JFrame implements ActionListener {
 			@Override
 			public void run() {
 				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-				Clock.run();				
+				Clock.run();
 			}
 		};
 		Timer timer = new Timer();
@@ -511,13 +481,10 @@ public class Main extends JFrame implements ActionListener {
 	}
 
 	public void switcher() {
-		boolean o = true;
-		if (Clock.isClockPause == false) {
-			o = true;
-		} else if (Clock.isClockPause == true) {
-			o = false;
-		}
-		Clock.isClockPause = o;
+		if (Clock.isClockPause == false)
+			Clock.isClockPause = true;
+		else
+			Clock.isClockPause = false;
 	}
 
 	public void runClockTimeOut() {
@@ -544,6 +511,5 @@ public class Main extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 }

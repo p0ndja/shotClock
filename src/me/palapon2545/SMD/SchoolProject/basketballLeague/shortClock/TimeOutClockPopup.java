@@ -7,24 +7,14 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TimeOutClockPopup extends JFrame {
-	
+	private static final long serialVersionUID = 5947538906076539790L;
 	public static JLabel main = new JLabel("--:--");
-
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,12 +27,7 @@ public class TimeOutClockPopup extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public TimeOutClockPopup() {
-		
 		//This code below block user to resize windows
 		//===========================================\\
 		setPreferredSize(new Dimension(800, 400));
@@ -59,7 +44,5 @@ public class TimeOutClockPopup extends JFrame {
 		main.setFont(new Font("Cordia New", Font.BOLD, 400));
 		main.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(main);
-	
 	}
-
 }

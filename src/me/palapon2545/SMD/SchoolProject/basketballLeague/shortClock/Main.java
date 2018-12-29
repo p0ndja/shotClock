@@ -152,7 +152,7 @@ public class Main extends JFrame implements ActionListener {
 
 		btnMinute_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				timeLeft = 300;
+				timeLeft = 3;
 				timeStart = timeLeft;
 				runClock();
 			}
@@ -345,14 +345,13 @@ public class Main extends JFrame implements ActionListener {
 		JButton btnm = new JButton("+1m");
 		btnm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				timeLeft = timeLeft + 60;
+				timeLeft += 60;
 				timeStart = timeLeft;
 				if (Clock.isClockPause == true) {
-					if (timeLeft < 60)
-						timeLeft++;
-					label_1.setText(Clock.CalculateTimer(timeLeft));
+					if (timeLeft < 60) timeLeft++;
+					runClock();
 				}
-				runClock();
+				label_1.setText(Clock.CalculateTimer(timeLeft));
 			}
 		});
 		btnm.setFont(new Font("Tahoma", Font.BOLD, 13));

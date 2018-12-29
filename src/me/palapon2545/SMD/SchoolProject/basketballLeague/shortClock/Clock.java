@@ -1,16 +1,7 @@
 package me.palapon2545.SMD.SchoolProject.basketballLeague.shortClock;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Toolkit;
-
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 
 public class Clock {
 
@@ -74,7 +65,7 @@ public class Clock {
 		if (isClockPause != true) {
 			// This part for millisecond
 			// =====================================================================\\
-			if (Main.timeLeft < 59 && Main.timeLeft > 0) {
+			if (Main.timeLeft < 59 && Main.timeLeft > -1) {
 				
 				Main.label_milli.setVisible(true);
 				
@@ -122,7 +113,7 @@ public class Clock {
 					Main.timeLeft--;
 					Main.progressBar.setValue(PercentCalculate(Main.timeLeft));
 				} else if (Main.timeLeft == 0) {
-					Main.label_1.setText("TIME UP");
+					Main.label_1.setText("0. 0");
 					Main.announce(
 							Time + "[timeLeft] " + Main.timeLeft + " -> 0 (" + PercentCalculate(Main.timeLeft) + "%)");
 					Main.timeLeft--;

@@ -511,4 +511,9 @@ public class Main extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 	}
+	
+	
+	public void printf(String args) {
+		System.out.println(args);
+	}
 }
